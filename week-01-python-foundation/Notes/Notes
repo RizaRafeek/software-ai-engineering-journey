@@ -1,0 +1,7 @@
+-Parsing vs. String Manipulation: Never try to parse a CSV or JSON file manually using string splits or regular expressions. Always use your programming language's built-in libraries (like Python's csv and json modules). They automatically handle edge cases like commas wrapped in quotes or nested brackets.
+
+-Character Encoding: Files are saved using specific encodings (how binary bits turn into letters). Always standardise on UTF-8 encoding to avoid strange character corruption bugs (like the dreaded `` symbol).
+
+-Streaming Large Files: Loading a 5GB CSV or JSON file entirely into memory will crash your application. Learn to stream or read files line-by-line (or chunk-by-chunk) when handling large datasets.
+
+-Validation: JSON files can be validated against a "JSON Schema" to ensure incoming data matches the exact format, types, and required fields your application expects.
