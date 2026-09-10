@@ -21,6 +21,11 @@ def save_file(new_expense):
         file.write(f"{new_expense['amount']} : {new_expense['date']} : {new_expense['category']}\n")
 
 def data_validation(amount, date, category):
+    try:
+        amount = float(amount)
+    except ValueError:
+        print("Enter Valid Amount in Numbers")
+        return False
     if amount <= 0:
         print("Invalid amount: Please enter a positive value for the expense")
         return False
@@ -33,7 +38,7 @@ def data_validation(amount, date, category):
     return True
 
 def add_expense():
-    expense = float(input("Enter the expense amount:")) 
+    expense = input("Enter the expense amount:") 
     date = input("Enter the date of the expense (yyyy-mm-dd): ")
     category = input("Enter the category of the expense:")
     data_validation_result = data_validation(expense, date, category)
@@ -63,26 +68,28 @@ def calculate_total():
     total = sum(expense['amount'] for expense in expenses)
     print(f"Total expenses: {total}")
 
-print("Enter your choice:")
-print('1.Add Expense')
-print('2.List expenses')
-print('3.Search Expense')
-print('4.Calculate Total')
-print('5.Exit')
 
-while True:
-    choice = input("Enter your choice: ")
-    if choice == '1':
-        add_expense()
-    if choice == '2':
-        list_expenses()
-    elif choice == '3':
-        search_expenses()
-    elif choice == '4':
-        calculate_total()
-    elif choice == '5':
-        print("Exiting...")
-        break
-    else:
-        print("Invalid choice: Please select valid option(1-5)")
+if __name__ == "__main__":
+    print("Enter your choice:")
+    print('1.Add Expense')
+    print('2.List expenses')
+    print('3.Search Expense')
+    print('4.Calculate Total')
+    print('5.Exit')
+
+    while True:
+        choice = input("Enter your choice: ")
+        if choice == '1':
+            add_expense()
+        if choice == '2':
+            list_expenses()
+        elif choice == '3':
+            search_expenses()
+        elif choice == '4':
+            calculate_total()
+        elif choice == '5':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice: Please select valid option(1-5)")
 

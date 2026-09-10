@@ -5,3 +5,107 @@
 -Streaming Large Files: Loading a 5GB CSV or JSON file entirely into memory will crash your application. Learn to stream or read files line-by-line (or chunk-by-chunk) when handling large datasets.
 
 -Validation: JSON files can be validated against a "JSON Schema" to ensure incoming data matches the exact format, types, and required fields your application expects.
+
+
+Composition
+inheritance means that specific thing has every single properties of the perent class(is a)
+-So no features of the parent class can go wrong for the child class
+-for eample riza is a human - then ria will have heart property of the parent class human
+-But composition is used for a (has a ) relationship.For example, car has an engine(the engine can be diesel, petrol based on the type). so we add those feautres individually and add thm up under a class.So modification is also easy unlike inheritance which has stricter rules
+
+Low Level Design
+Nouns - classes
+its attributes and methods- think about what that specific noun like restaurant is and what it can do
+Relationship - figure out what is connected to what to perform an action and how they are connected
+
+State and invariants
+-state holds the data at that specific instancs 
+ for eg : balance = 500 it can get updated or deducted in the next operation
+-invariants:
+this are the business or logicall rules that should not be violated if the system has to function
+for eg : the balance should be lesser than 500 , if the transaction results in that block that transaction(the account should have 500 minimum balance)
+
+
+virtual evironments
+-one virtual environment fro one project
+-python -m venv env
+-.env\Scripts\activate.bat
+-pip install libraries and dependencies(those will stay inside the ve itself)
+-prepare arequirements.txt with specific versions for other software engineers who might work on this project
+      when they are using your project by cloning it:they run:-
+           pip install -r requirements.txt 
+      this install all the libraries and dependencies mentioned in requirements.txt
+-add the venv to .gitignore so its not uploaded to github
+-deactivate
+
+libary : the actual code
+dependency : how my project related to it
+   The moment your project imports a library because your code depends on it to function, that library officially becomes a dependency of your project
+-r : in the command it says Hey pip, look inside the text file following    
+this flag, read it line by line, and install every library listed inside it.
+
+
+
+
+my-python-app/                 <-- Root Directory (Git repository)
+├── .github/                   <-- CI/CD workflow automation (e.g., GitHub Actions)
+├── .vscode/                   <-- VS Code local editor workspace settings
+│   └── settings.json          <-- Forces VS Code to use the local venv
+├── docs/                      <-- Project manuals and API documentation
+├── src/                       <-- Source Code Directory
+│   └── my_app/                <-- Main package name (use underscores, not hyphens)
+│       ├── __init__.py        <-- Makes this directory an importable module
+│       ├── main.py            <-- Entry point to execute the application
+│       ├── config.py          <-- Loads environment variables & constants
+│       ├── database.py        <-- Database connection and session setup
+│       ├── models.py          <-- Data definitions (SQLAlchemy, Pydantic, etc.)
+│       └── utils.py           <-- Global reusable helper functions
+├── tests/                     <-- Test suite directory (Mirrors src structure)
+│   ├── __init__.py
+│   ├── conftest.py            <-- Global testing configurations/fixtures for pytest
+│   ├── test_main.py           <-- Tests for main.py logic
+│   └── test_models.py         <-- Tests for models.py data structures
+├── .env                       <-- REAL local secrets (DB passwords, API keys)
+├── .env.example               <-- TEMPLATE for secrets (DUMMY values only!)
+├── .gitignore                 <-- Tells Git what to ignore (venv, .env, __pycache__)
+├── pyproject.toml             <-- Modern Python build configuration & tool settings
+├── README.md                  <-- Markdown onboarding guide for developers
+├── requirements.txt           <-- Simple direct dependency list for pip
+└── venv/                      <-- Local virtual environment (sandbox runtime)
+
+-__init__.py : so we just hold the main address of the importable module inside iniy.py under smaller    names so we just have to import using that small name in our code and do t worry about that long path
+
+-.env .example : env files with values replaced with fake values. so if a deveeloper downloads it they fill 
+  in their own values and continue
+  we commit this to github
+
+-.gitignore :  A text file listing names of files and folders that Git should completely ignore tracking.
+  eg: venv/, .env, __pycache__
+
+-README.md: (for anyone landing on your github project)
+       brief context about the app,
+       exact terminal setup steps
+       how to run tests
+       explanation of configuration options.
+
+-venv/:
+        The localized virtual environment folder containing the project's isolated Python interpreter executable and downloaded dependency binaries.
+
+-docs/:(for developers)
+        A folder dedicated purely to human-readable manuals, system design flowcharts, and technical markdown specifications describing how the system works conceptually
+
+-config.py:
+       the trusted manager file which deals with en directly.Other files approach this file for the env variables.It prechecks before passing on the varibale
+
+-database.py:
+       database connections, engine instances and connection pools
+
+-models.py:
+       define structures , classes, orms etc
+
+       
+-utils.py:
+     helper functions are defined here
+
+-capsys(in-built tool of pytest):
+    watch terminal window during test
