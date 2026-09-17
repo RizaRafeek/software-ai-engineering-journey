@@ -1,0 +1,223 @@
+List manipulation:-
+    Traversal:
+        item-based : when you need the values
+        index-based : when you need the index
+        enumerated : when you need both index and values
+
+        in - returns boolean
+        .index() - returns gthe first position of the item
+
+    Update:
+        Update:
+            item[index] = values
+        Append :
+            items.append(value)
+        
+    Insert:
+        items.insert(index, value)
+    
+    Remove:
+        by value:
+            items.remove(value)
+        by index:
+            items.pop(index)        -default to last
+
+    Deleting(not returning the value):
+        del items[index]
+
+
+Nested List:
+    aceessing:
+        chained square brackers [row][ccolumn]
+    2D matrix:
+        for row in matrix:
+            for element in row:
+
+
+Strings:
+to modify a string you must createe a new one
+
+String Manipulation:
+    ~split(seperator)
+    ~join(iterable)
+    ~.strip()
+    .replace(old, new)
+
+
+Use list:
+    -when order matters [need to maintain the sequence of order in which elements are added]
+    -duplicaates are allowed
+    -frequent end operation(append,pop)
+    -Index-based access
+
+Dont use list:
+    -Instant lookups are needed (bad time complexity) - use set or dict instead
+    -need key-value pairs
+    -adding/removing from the front(causes memoruy shift) - deque is better
+
+
+
+Dictionary
+    LookUp:
+        user['name']  returns 'Alice' 
+            crashes with keyerror if not exits
+        user.get('name')
+            does not crashes
+
+    Updating:
+        already existing key:
+            user['name] = 'Mia'
+        new key
+            user['location'] = 'New York'
+        merge another dict with your current dict
+            .update()
+
+    Nested Dictioary:
+        Dictionary within another Dictionary
+        -Used in Complex JSON Configurations or AAPI responses
+
+        Accessing data:
+            Use the chain of keys:
+                user['location']['district']['village']
+
+    Dictionary Iteration:
+        Loop through keys:
+            for key in user
+            for key in user.keys()
+
+        Loop through values:
+            for value in user.values()
+        
+        Loop through both:
+            for key, value in user.items()
+
+
+Sets
+Used to :
+    -check unique user permissios
+    -track active sessions
+    -finding common tags between products
+
+
+-Keys in dictionary should be hashable
+ Hashable types:(immutable types)
+    -Strings
+    -numbers
+    -tuples
+ Unhashable types:
+    -list
+    -dictionary
+Because unhashable types are the ones that is changeable so it cannot be hashed
+
+This makes the lookup easy - O(1)
+
+
+
+Selection Sort:
+    -scan the full list and find the smallest one
+    -move it to the sorted part
+    -remaining :- unsorted part
+    -now check the unsorted part and do the same process
+    -move the smallest part to the sorted part
+    -remaining - unsorted part
+  Time Complexity : O(n^2)
+  Space Complexity ; O(1)
+
+Insertion sort:
+    -first element - sorted part
+    -second element compare with first
+    -move if smaller
+   Shifting happens to leave space to insert the value at a specific space
+
+
+Timsort
+merge sort + Insertion sort
+Time Complexity : O(NlogN)   
+Space Complexity : O(N)
+
+
+
+Tuple Unpacking:
+    a, b = b,a 
+  to swap two elements in a list, string etc
+
+
+Stack
+    for undo/redo:
+        there will be two stacks:
+            -when you do something - everything is stored in undo stacks
+            -then you click "undo" - the item gets popped
+            -that will be stored in the redo stack
+            -when you click "redo" - the item gets popped from redo
+            -it will be pushed back to undo stack
+
+    Implementing:
+        we can use:
+            -array/list
+            -linked list
+
+    the system will not inherently know  its a stack
+    we make it a stack:
+        -either we as a team agree that we will only do operations at the end(LIFO)
+        -else we set the quadrail:
+            we wrap it inside a class and define the methods in it
+            so when a developer creates a stack class they can do any operations other than the listed ones
+
+    there is no in-built data structure called stack
+    we just create a list/array or linkedlist and then set stack-based rules to it
+    there is no inbuilt push, pop ,peek operation - those are hypothetical stack operations
+    this is truee for modern languages - but older Java / C++ HAVE sTACK DATATYPE
+
+
+
+Queue
+    Used in :
+        -customer service queues
+        -background task assigning
+        
+
+    Operaations:
+    To interact with queue:
+        -enqueue:
+            adds an item at the tail
+        -dequeue:
+            removes and returns items from the front
+        -front/peek:
+            look at the element at the front end of the queue without removing it
+        -is_empty:
+            checks if queue has any items left.
+            Return True/ Fale
+
+
+
+Recursion:
+     a recursion is used when you dont know how much time you have to repeat the process and at each stage you have to do exactly the same operation
+    Whwn a function is called:
+        -the call stack creates a new layer
+        -it is pushed into the stack
+        -when next function is called
+        -it is pushed on top of that existing Stack
+           this helps in tracking the way back unlike loops which has the memory of only the current state
+
+    Recurssion will have:
+    -Base Case:
+        Condition after which the looping will not happens
+    -Recursive Case:
+        the steps to repeat
+
+    Call stack:
+        internal runtime structure that tracks these calls is the Call Stack
+    Endless recursion(absence of base case):
+        creates stack overflow - run out of memory
+
+
+
+Since you only need the Top 3 numbers, an even more optimal approach would be maintaining a fixed-size array of exactly 3 elements. 
+When a new score arrives, you check if it is greater than the smallest number in your top-3 list. 
+If it is, you swap it in and quickly re-sort just those 3 items. 
+This keeps your timeline entirely O(1) constant time regardless of how many millions of players join the game!
+
+condition like - 
+    if item not in list - loops through list
+    so o(n) complexity for this alone
+    

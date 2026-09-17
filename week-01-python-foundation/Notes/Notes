@@ -109,3 +109,74 @@ my-python-app/                 <-- Root Directory (Git repository)
 
 -capsys(in-built tool of pytest):
     watch terminal window during test
+
+
+    
+Git Commands
+as a junior software engineer :
+-git checkout main:
+       switches your computer view to primary, stable branch
+-git pull:
+       downloads and merges the newest changes your team uploaded while you were asleep
+       always pull before you build
+
+--Create a Safe Sandbox:
+  never code on main-if you make a mistake - you could break the product for everyone
+  -git branch (branchname) - you are creating a new branch to write your    code
+       if addinf features - feat
+       if fixing code - fix/bufgix
+       if updating doc - docs
+       rewriting into cleaner code without changing the functionality - refactor
+  -git checkout (branchname):
+       jumps into that branch
+ To do both the steps together:
+       git checkout -b (branchname)
+
+--Write and Review Code:
+ writeyour code
+ -git status:
+       ~run this constsntly - highlights modified files in red 
+ -git diff
+       shows you exactly lines of code you added(+) or deleted(-)
+       use this to self-review your code
+
+--Save Locally:
+dont dave everything at ones - make tiny meaningful atomic commits 
+  -git add src/filename:
+       moves only that file to staging area - turns green in git status
+  -git commit -m "message
+       permanently locks the snapshot into history
+       write message commits in this format:
+              type: description 
+              eg : "fix: added blah blah balh"
+
+--Share and Propose
+Once the feature is working locally - send it to cloud(Github/Gitlab)
+  -git push:
+       send the local branch to the remote server
+  -Pull Request
+       -you click on new Pull request -> select Sorce Branch : (your local branch) -> Target Branch : the destination branch(eg:main)
+       -in text box : write the what why and testing you did, relevant  screenshots  
+       -Submit
+       -assign senior developers as reviewers
+       -they can 
+              ~inline comments
+              ~or mark the PR as Changes requested  - this will block the merge
+       -Then you go to your local system - make neccessary changes:
+             type git add, commit and push again 
+       -Git updates your earlier pr with the new changes you made
+       -The reviewer you can see you updated the code
+
+   -Automated Checks:(CI/CD)
+     Robot also run ertain tests:
+       - automated test suite to ensure code didnt break old features
+       -scans the code for security vulnrabilities
+       -if test fail - Red X on your PR - blocks the merge
+
+ -Approval and the Merge:
+  -IF:
+       -AUTOMATIC TEST PASS
+       -senior developer click approve
+ -Thee Merge Pull Request turns green :
+     either you or senior developers can click on it
+     git takes the commits from the local branch and stitch it with main branch

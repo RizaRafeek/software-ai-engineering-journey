@@ -1,0 +1,57 @@
+Initial Design
+
+    data structures needed:
+        dict - for individual jobs
+        nested dist - for all the collection of jobs
+        why:
+            dict can be accessed using id as key and value as the job dict
+            easy lookup and access- stores information structurally-even value dicts value can be accessed using chain brackets
+
+
+    Operations Required:
+        1.add job
+        2.view pending job
+        3.view complete jobs
+            so maybe we need another key where we store the value as either pending or completed
+        4.Cancel or delete job
+        5.show the statistics:
+            count of:
+                -pending jobs
+                -completed jobs
+                -cancelled jobs
+        6.Exit
+
+
+    Edge Cases:
+        -if queue is empty :
+            print an queue empty message while raising Indexerror so system wouldnt crash
+        -if job id doesnt exist:
+            print a id doesnt exist error while raising error
+        -if adds invalid job:
+            print an invalid job error and raise ValueError
+
+Improvisation:
+deque - to get the jobs in FIFO order:
+    but in deque : ids
+    dictionary: when that id is called the lookup and accessing from dictionary happens
+
+
+
+Engineering Decisions:
+    -Dual-Structure Indexing:
+        Split system state into a master dictionary for lookups and a deque for execution sequence
+    -Constant-Time Queueing (O(1)):
+        Implemented collections.deque instead of a list to avoid O(N) memory-shifting 
+        performance drops on job removal.
+    -Lightweight Deque Payload:
+        Enqueued only string IDs instead of full dictionaries to minimize memory 
+        usage and keep a single source of truth.
+    -Historical Data Isolation: 
+        Segregated completed and cancelled records into separate arrays to completely 
+        avoid O(N) filtering bottlenecks.
+    -Lazy Deletion Mechanism:
+        Tagged cancelled jobs in-place and used recursion to skip them at the front, 
+        preserving O(1) performance.
+    -Defensive Fault Isolation:
+        Used a explicit "throw and catch" exception flow to validate IDs and prevent user
+        typos from crashing the CLI.
