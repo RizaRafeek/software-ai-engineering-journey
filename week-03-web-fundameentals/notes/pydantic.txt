@@ -1,0 +1,134 @@
+Pydantic:
+    uuid.UUID datatype - unique 32 bit id 
+    date type for data 
+
+    creating optional field:
+        data type : str | None | int (one of these datatypes are expected)
+
+
+    Creating a list of options to choose from
+        ~create a seperate class defining all the options
+        ~use it as a datatype
+        eg:-
+            class Department(Enum):
+                ARTS_AND_HUMANITIES = "Arts and Humanities"
+                SCIENCE_AND_ENGINEERING = "Sciene and Engineering"
+
+            department : DepartmentEnum
+
+
+
+    unpacking:
+        for student in students:
+            model = Student(**student)         -sTUDENT IS THE PYDANTIC CLASS WE CRAETED
+            print(model)
+
+
+    we have a data  -> we create pydantic class to validate -> we unpack  
+
+
+    Constrained types :
+        if you want to add onstraints to the data you are receiving 
+            eg : age cannot be negative or above 130 - they are Invalid
+
+        conint, confloat etc
+
+        Eg :-   age : conint(gt=0 , lt=130)
+
+    
+    Custom Validator functions:
+        if we are creating a custom validator function for date of birth field to let only the students who are
+        greater than 18 to enroll:
+            @validator('date_of_birth)
+            def ensure_16_or_over(cls, value):
+                sixteen_years_ago = datetime.now() - timedelta(days=356*16)
+                sixteen_years_ago = sixteen_years_ago.date()
+
+                If value > sixteen_years_ago:
+                    raise ValueError("Too young to enrol, sorry!")
+                return value
+
+
+    if in unpacking we wrote print(model.dict()) -> it will be printed as python dictionary 
+    -> we have validated dict data
+
+    model.json -> converting into simpler primitive types
+
+
+
+    ~database acts as the main informaton source  -> bad data -> app crashes
+     so data validation is ery important before that
+    ~frontents can be easilt=y bypassed -> so that level validation is not reliable
+    ~its best to validate from the gate instead of letting them in finding them among such a large pool
+
+
+    Pydantic model:
+        -blueprint for our data
+        -we craete a class and inherit BaseModel
+        -data comes  ->  pass into the model  
+
+    Fields,Types , Type Coercion:
+        -it safely converts a datatype into the format we specified
+
+    Required vs optional fields:
+        by default : every field we declare is required, 
+                     if that field is emoty pyt=dantic will reject entire data
+
+        to make optional : Optional type hint or |None
+
+
+    Nested Model :
+        Model within a model
+        eg : 
+            class Manufacturer(BaseModel):
+                company_name: str
+                country: str
+
+            class Product(BaseModel):
+                name: str
+                price: float
+                manufacturer: Manufacturer 
+
+        the data we receive should be a nested json as well if we have to perform this way
+
+
+
+    Response Model:
+        like PR of a celebrity  -> tells the outsider only what they need to know , not much
+        
+        so we create two classes:
+            -one that containes all the info about the user
+            -one that states what is to be shown : this pydantic model filter out the unnecessary info
+            -then we set response model as second class in that specific endpoint
+    
+
+
+    Error Handling:
+        when pydantic spots a bad data, it stops the process and hands you a error card where all the details 
+        of the failure will b there usually in the firmat {type: , loc: , msg: }
+        -fastapi after this automatically processes into  ->  422 Unprocessable entity
+        -frontent : reads the loc and prints that message directly under that loc textbox in red line
+
+        you can customise the error using Field utility
+
+
+
+
+    good software is software that catches errors gracefully and explains exactly what went wrong.
+
+
+    Validation errors :
+        happens the very secind the data arrives at server
+        pydantic handles this before business logic runs
+
+
+
+    HTTP Exceptions : 
+        Business logic error
+        data is valid  ->   but it is an error like seraching an id that doesn not exist
+        -> this is caught by the developer, he has to writr thr business logic
+        -> he raises an HTTP Exception
+
+        ->It is raised when an invalid HTTP request using HTTP method is made
+
+        

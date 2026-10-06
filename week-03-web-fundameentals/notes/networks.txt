@@ -1,0 +1,100 @@
+Computer Networks:
+    Hackers get in to a system through its Networks
+
+    In the computer network:
+        IP Address : like a home Address
+            your laptop will be having an IP Address in your home network
+        Port :
+            single device will be running multiple services
+            each will have its own port 
+            25 : email/ smtp
+        Protocol:
+            sequence of process
+            set of rules for communication
+                    HTTP : rules for loading web pages(request + response)
+                    DNS : rules for converting domain name into IP Address
+            Exploiting protocols is how many attacks occures
+
+    LAN:
+        -A WLAN is simply a LAN that uses Wifi instead of cables
+        -Once Inside a LAN the attacker can see all other devices
+            -The attacker can create a fake wifi using cheap device like wifi pineapple and when you conncet they can \
+              collect your credentials(make browser navigate to fake google etc and enter your credentials),
+              know your web traffic(the websites you visit etc), personal data etc 
+            -the attacker can make their wifi connection stronger and make your device disconnect and then roam and then
+              connect to theirs
+              to prevent:
+                -Use VPN if connecting to public Wifi
+                -add mfa to all your accounts
+
+    WAN :
+        -Internet
+        -Companies - have provate WANS - coonecting their offices accross cities
+        -WAN passes through many hands
+          to prevent hacking:
+                encryption
+
+    VPN:
+        Virtual Private Network
+        -encrypted tunnel through a public network
+
+
+    The Network Hardware:
+        Router:
+            connects different network
+            -connects your wifi(LAN) to internet(WAN)
+            -reads IP Address on eaxh packet to decide where to send it
+            -compromised router : attacker controls all the traffic
+                weak password in home network: #1 vulnerability
+
+        Switch:
+            connects multiple device same local network
+            -sends each messsage only to its target device
+            -tracks MAC address to know which device is on which port
+                -MAC Flooding forces a switch to act like a dumb hub, attacker then sees all the traffic
+
+        Firewalls:
+            monitors and controls network traffic based on defined rules
+            -every enterprise has firewalls - first line of Defence
+                but attackers can bypass firewalls - defence in depth is essential
+
+        Access points:
+            creates wifi signa for wireless device connection
+
+    
+    packet:
+        the data is sent as a thousands of packet
+        -each packet contains : 
+            -mac address - datalink layer
+            -ip header      -  network layer
+            -tcp/udp header   - transport layer
+            -data payload
+        risk:
+            packet sniffers(tool) capture these - if unencrypted ,everything is readable
+
+
+    -In client server model:
+        server : taget for attackers bcz data of million people  can be exposed
+
+    -peer to peer
+        hard to monitor, no centralised control, no single point of failure - hard to shut down
+
+    -Bandwidth:
+        maximum amount of data transferred per second(Mbps/Gbps)
+
+    -Latency:
+        time taken by data to travel from source to destination(milliseconds)  -high latency : slower
+        sudden latency spikes can signal an attacker
+
+
+    OSI(Open Systems Interconnection) model;
+        -most attacks happen in application layer : it is more exposed publicly
+        Please Do Not Throw Sausage Pizza Away
+
+
+    IP Address:
+        numerical label assigned to every device on a network - like postal address for your machine
+        -who is this device
+        -where is this device
+
+            

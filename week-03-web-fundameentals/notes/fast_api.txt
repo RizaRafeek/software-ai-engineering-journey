@@ -1,0 +1,43 @@
+FAST API :
+    fastapi as a highly efficient manager who makes our request and response hassle free
+
+    why Fastapi:
+        -automated documentatiomm
+        -automatic data validation
+        -async
+        -code auto-completion
+
+    FastAPI is a concrete Python library. It is the specific vehicle you chose to construct your REST API.
+
+    Fastapi : application framework
+    fastapi + uvicorn(server connecting to the network) : application server
+
+    Pydantic:
+        instead of listing all wrong cases and handling them we simple define how we want our data to be
+        so anything other than that format is invalid
+
+    Routing :
+        defining which function hndles which url
+        -you route the path or finding the best path to travel from source to destination
+
+
+    Project Structure:
+        week-03-web-fundamentals/
+        └── mini-api/
+            ├── app/
+            │   ├── __init__.py    # (Empty file, makes the folder importable)
+            │   └── main.py        # (The brain: where all our FastAPI code lives)
+            └── README.md
+        
+        **anything inside app - runs the server
+          outside : tests, configurations, docs etc
+        
+
+        Example case : digital library system:
+            -we import fastapi and Pydantic, create a dictionary database
+            -then we create pydantic validation for request and response
+            -routes and parameters(how the data can be manipulated):
+                ~to find a book : path parameter is enough
+                ~to filter out: query parameter(declared as function)
+
+        to launch the server : fastapi dev app/main.py

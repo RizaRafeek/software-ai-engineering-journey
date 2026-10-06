@@ -1,0 +1,212 @@
+/me  : user using on hus app : system uses his credentials
+/{id} : whena an external system like the company admin access their profile
+
+
+API Endpoint design for Food Delivery System
+
+1.Customers:
+    profile:
+        POST/Customers
+        request_body : {
+            "name": "string",
+            "email": "string",
+            "password": "string",
+            "contact_no": "string",
+            "address": "string"
+            }
+        response_body(201 created) : {
+            "id" : "104",
+            "name" : "string",
+            "email" : "string",
+            "contact_no" : "string"
+            "address" : "string"
+        }
+        possible Errors:
+            -400(Bad request) :  Missing/Invalid Fields
+            -409(Conflict)  : Email already exists
+
+        
+
+        GET/Customers/me - get should not have a request body
+            response_body(200 OK): {
+                 "name" : "string",
+                "email" : "string",
+                "contact_no" : "string",
+                "address" : "string"   
+                }
+            possible errors:
+            -404 ( Not Found) - the data does not exist
+            -401 ( Unauthorized)
+
+
+        GET/custometrs/{custoner_id}
+            response_body(200 OK):{
+                    "name" : "string",
+                    "email" : "string",
+                    "contact_no" : "string",
+                    "address" : "string"   
+                }
+            possible errors:
+            -404(Not found)
+            -401(Unauthorized)
+
+        PATCH/Customers/me 
+            request_body : {
+                "name" : "liya"
+            }
+            response_body(201 created):{
+                "name" : "liya",
+                "email" : "string",
+                "contact_no" : "string",
+                "address" : "string"  
+            }
+            possible errors:
+            -401 (Unauthorized)
+            -403 ( Forbidden)
+
+    Restaurant:
+        POST/restaurants
+            request_body: {
+                "name": "string",
+                "email": "string",
+                "password": "string",
+                "contact_no": "string",
+                "address": "string"
+                "opening_time" : "string",
+                "closing_time" : "string"
+                "cusines" : []
+            }
+            response_body(201 created) : {
+                "id" : "restaurant_id",
+                "name" : "string",
+                "email" : "string",
+                "contact_no" : "string"
+                "address" : "string"
+                "opening_time" : "string",
+                "closing_time" : "string"
+                "cusines" : []
+                }
+            possible errors:
+                409(Conflict)
+                400(bad request)
+
+            GET/restaurants:
+                response_body(200 OK) : [
+                    {
+                       "id" : "restaurant_id",
+                        "name" : "string",
+                        "email" : "string",
+                        "contact_no" : "string"
+                        "address" : "string"
+                        "opening_time" : "string",
+                        "closing_time" : "string"
+                        "cusines" : []  
+                    }
+                ]
+                possible errors:
+                    -401
+                    -404
+        
+
+            GET/restaurants/{restaurant_id}
+                reponse_body(200 OK) : {
+                    "name" : "string",
+                    "email" : "string",
+                    "contact_no" : "string"
+                    "address" : "string"
+                    "opening_time" : "string",
+                    "closing_time" : "string"
+                    "cusines" : []  
+                }
+                possible errors :
+                    -400
+                    
+
+    Menu Items :
+        Add new dish :
+        POST/restaurants/{resyaurant_id}/menu-Items
+            request_body : {
+                    "name" : "string",
+                    "price" : float
+                    "category" : "string"
+                }
+            response_body (201 Created): {
+                    "id" : "menu_item_id",
+                    "name" : string,
+                    "price" : float,
+                    "category" : "category"
+                }
+            possible errors:
+                409 - menu item already exist
+                403 - maybe an outsider is trying to add an item
+                400 
+
+        GET/restaurants/{restaurant_id}/menu-Items
+            response_body(200 OK) : [{
+                    "id" : "menu_item_id",
+                    "name" : string,
+                    "price" : float,
+                    "category" : "category"
+                }]
+            possible errors:
+                -404
+
+
+    Orders:
+        POST/orders
+        request_body : {
+                "restaurant_id" : "string",
+                "delivery_address" : "string"
+                "items" : [
+                    {
+                        "menu_item_id" : "string", "quantity" : 1 
+                    }
+                ]
+            }
+        response_body(201 created) : {
+            "order_id" : "string"
+            "price" : float,
+            "order_status" : "string"
+        }
+
+        the calculation is done by the application layer no ? no need to mention the calculaton in the response body no?
+         it just need to show the final message the server send to the client
+
+
+        GET/orders/{order_id}
+        response_body(200 OK): {
+                "order_id" : "string"
+                "price" : float,
+                "order_status" : "string"
+            } 
+        possible errors:
+            -404
+            -403
+
+
+    
+    Payments:
+        POST/payments
+            request_body: {
+                    "amount" : float,
+                    "order_id" : "string"
+                }
+            response_body(201 created): {
+                    "payment_id" : "string",
+                    "amount" : float,
+                    "order_id" : "string"
+                }
+            possible errors:
+                -400
+                -402
+
+        GET/payments:
+            response_body : {
+                    "payment_id" : "string",
+                    "amount" : float,
+                    "order_id" : "string"
+                }
+
+
+
+            

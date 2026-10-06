@@ -1,0 +1,132 @@
+HTTP Methods:
+    GET :
+        retrieves data from the server
+    POST :
+        Submit data to server
+    PUT :
+        update data already on the server
+    DELETE : 
+        delete data from the server
+
+
+HTTP status Code:
+    1xx : Informational
+        request received/ processing
+    2xx : Success
+        successfully received, understood and accepted
+    3xx : Redirect
+        further action must be taken/Redirect
+    4xx : Client error
+        request does not have what it does
+    5xx : Server error
+        server failed to fulfill an apparent valid request
+
+    
+    Some of the status codes:
+        200 : OK
+        201 : OK Created  - eg:when using POST
+        204 : No Content - 
+            maybe it comes when you save something - save draft so the server does it and no
+            server does the acton like update(PUT/PATCH) but does not have data to show you
+        301 : Moved to new URL
+        304 : Not Modified(Cached version)
+        400 : Bad Request
+        401 : Unauthorized   - (Credentials are missing) - who are you?
+        403 : Forbidden   - (this client is forbidden to enter) - you cant do this (he knows the person)
+        404 : Not Found     - (The server doesnt have the data)
+        409 : Conflict  - resource is there - but ddoing this action will break a rule or cause a collision
+        422 : unprocessable entity   - the data is for atted but make no sense
+        429 : Too many requests
+        500 : Internal Server error
+
+
+Big 3 :
+    -safe methods:
+        if that is not making any changes to the data in the server
+    -idempotent methods:
+        if doing that methood 10 times will only produce the same result as doing once
+            GET
+            PATCH
+            DELETE
+    -payload(Request body)
+        some send the data inside the request body or via the url to the server
+
+
+GET :
+    -dont submit password through url methods , urls are saved in the browser history - prone to exposing
+
+POST :
+    -post something new o trigger non-idempotent action like processing payment
+      if you click on order and then internet freezes and then click on it again _ the order will be placed twice , if its made with POST
+    -Each post request creates new resource or action
+    - so after refreshing:
+        browsers show if you click on that again : are you sure you want to resubmit again
+
+    To solve that:
+        Engineers designed a solution:(idempotency key)
+        the ceckout page : generates an id even before clicking the button
+        when clicked submit - the post method along with that key is send
+        when you click again the post with the same key 
+        server caches it 
+
+PUT:
+    update an existing resource entirely or create it if it doesnt exist
+
+PATCH:
+    Update a small piece of an existing resouce\
+        if you only want to update the phone number the rest remain the same
+        it is not idempotemt because 
+             {"age": "increment by 1" }, running it three times will change the age by 3,
+              altering the result every time.
+
+DELETE :
+    get rid of the resource
+    server statte remain - deleted - no matter how much you call - so idempotent
+
+
+
+
+JSON:
+    standardized way to package information into a plain text format so that different programming
+    language can easily understand each other
+
+    6 data types in json:
+    -Strings:
+        textual data
+        wrapped in double quotes - no single quotes
+    -Numbers:
+        numeric value : int/floats
+        dont use quotes, no comma seperator as in 10,000
+    -Booleans
+        must be lowercase : true/false
+    -Null 
+        absence of value - not 0
+        lowercase - Null
+        it gets convertyed to None in Python
+    -Objects:
+        collection - key-value pairs wrapped in - {}
+        keys : string in double quotes
+        key-value seperated by :
+        pairs seperated by comma
+    -arrays:
+        ordered list of values wrapped in []
+        has a key like -
+        eg: "tags" : ["electronics, "work", "pc]
+
+
+    
+    Nested Objects: Onbjects within an Objects
+
+
+    Serialization:
+        python - its  called dumping/encoding
+        python dict/list  -> JSON using:
+            json.dumps() : object -> json string               -> memory : Ram    use in the later process
+            json.dump() : object -> writes directly to the file   -> memory : Disk
+               here is where none becomes null, True becomes true
+
+    Deserialization
+        python - its called loading/decoding
+        JSON -> python dict/list using:
+            json.loads(): decode JSON string
+            json.load : decode JSON data directly to the file

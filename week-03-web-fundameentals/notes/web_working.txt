@@ -1,0 +1,127 @@
+how web actually work:
+    the web conist of :
+        html : anything we see(texts, headings)
+        css : anything with appearances
+        javascript : interactions
+
+    Client-Server:
+        Client:
+            -specific software application riunning on a device that communicates with the server on behalf of tge user
+                eg : browser
+            -multiple clients can be hosted on one machine at the same time:
+                eg: checking email while listening to music - two seperate clients
+            -there can be headless client too : request running - which we cannot see
+        Security:
+            -the client-side - the hacker can go to inspect in the developer tool of the web page and make changes in the
+            code and bypass the clientside code
+            -so there shhould be double validation
+             since server side cod ewill be in the server, they cannot manipulate it .so add a validation there to re-validatw
+
+
+        Server:-
+            -software program
+            -receives request from clients ->  process  -> send response
+            role:
+                -manages data
+                -handles security permissions
+                -performs business logiv(authenticating users)
+                -operates on backend
+            -In modern software engineering we mostly deal with virtual servers in cloud
+
+        
+        Request:
+            electronic message send client -> server
+            -web request follow HTTP  standard:
+             Components:
+                -URL: the targeted address
+                -HTTP method : GET,POST etc - the action intended
+                -Headers : metadata about the request ( type of data the client wants, security actions etc)
+                -Body:optional data sent
+
+        Response:
+            message server -> client
+            Components:
+                -Status Code: three didgit code indicating the outcome : 200OK, 404 Not Found
+                -Headers
+                -Body : the actual payload(HTML files , image json)
+
+
+        Servers:
+        three levels of servers:
+            example - NetFlix
+            Web Server:
+                receives the http request      ->  looks the request and send 200 OK  ->
+                loads the static page everyone has access to(NetFlix login page)  ->you type in the credentials
+                you click sign In 
+            Application Server:
+                It has the business logic
+                it takes the gmail and send the database query to check the database for the password for the gmail
+                After receiving the passwords it performs matching
+                if it matches the application layer send the data associated with that 
+                it runs algorithms and find movie rrecommendation
+                It packages this entire information into json and hands it to web server
+                wweb server hands it to the browser
+                browser displays it
+            Database layer:
+                receives the male and find the encrypted password as well as the list of data associated with that account
+                hands it back to application layer
+
+            basically:
+            web server - the front gate and security
+            databaase layer - the warehouse
+            application layer - the one that decides what to do with data and all the decisions
+
+
+        The big picture:
+            - we type in the url in the browser
+            - the browser check with the cache: 
+                 if recently visited it gets the ip address from It
+            -if not make a request to DNS for the address of the domain name
+            -with that IP address:
+                client send synchronous message to Server
+                server acknowledges and send the response back
+                client confirms the connection
+                TCP 3 WAY HANDSHAKE : ensures both client and server are ready to transfer data securely without dropping packets
+            -now connection is open
+            -sends the http request to the server
+            -servers three layer process as described earlier
+            -web server returns the json data as the HTTP response to the request over tcp to client
+            -frontend render (browser does this)
+
+
+
+    HTTP:
+        In modern web development, always use https, http : is flagged as insecure
+        HTTP : hacker can see everything
+        HTTPS : have an advanced feature : s-secure - encrypted using SCS/TLS
+
+        Anatomy of Web Address:
+            we cant directly write the http method.ser wants to execute a POST, PUT, or DELETE request, 
+            they have to interact with elements on the page (like clicking a "Submit" or "Delete" button)
+
+            example : GET /users/42?active=true&seen=true(attached by browser) , https://example.com(typed in browser)
+                -domain : example.com
+                    sld(second-level domain) : example
+                    tld(top-level domain) : .com
+                -path : users/ 42 (specific)
+                -query parameters : 
+                    strat with - ?
+                    key value pairs
+                    seperate with - &
+
+        Anatomy of Message(Request, Response):
+            Headers:
+                metadata(what browser you are, security tokens)
+            Body :
+                optional for request
+
+        request headers(middle) : start with : in request url, :authority, :method etc
+            have things that browser is telling to the server
+        reposne headers(end) : just normal words
+            have things that server is telling the browser
+
+            
+
+
+
+

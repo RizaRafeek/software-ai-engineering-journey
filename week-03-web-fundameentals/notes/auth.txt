@@ -1,0 +1,28 @@
+Authentication and Authorization:
+    authentication(authN): 
+        who are you  - id card used for authetication
+    autherization(authZ):
+        what you can do   - even though yu have id you will not be inherently allowed
+                            inside the server room
+
+
+    RBAC : Rule Based Acess Control
+
+
+    middleware:
+        layer between request and reponse_body
+        validation check happens 
+        if it passes  go to the server  -> there they do authorization  
+        -> check if the mail belongs to the ones authorized with admin or super admin or normal categories
+
+        admin dashboard / login page is different from the normal one
+
+    
+    Authentixation 2 types:
+        -based on session(stateful)
+            when server is storing previous information to process upcoming request
+            faster than stateless
+            storage becomes a problem
+        -stateless authentication:
+            stateless means the server will not utilize any previous request information for the next request
+

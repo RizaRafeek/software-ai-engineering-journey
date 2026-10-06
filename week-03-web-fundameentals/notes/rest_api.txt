@@ -1,0 +1,73 @@
+REST API :
+    -instead of HTML as response REST API gets json
+    -API s help us  to communicate with softwares written in different languages as well
+    -REST communicates over web
+
+    why api endpoints:
+        -security:
+            -if clients given direct access to the database, they can manipulate  it
+        -versatality:
+            -we can login into mobile app as well as web of an app due to this 
+            because the api endpoint is same - same backend
+        -you can swap things:
+            you can change the backend to different language; - your frontend wouldnt even
+            need to know or care - the api endpoints remain same - so is their functionality
+            no need of update in frontend
+        -interoperability:
+            expose an api endpoint as public -> other build a frontend to use that and interact
+            with the backend
+            if its private - use other methods to access it - may be have a key
+
+
+    RESTful API :
+        if an API follows all the six principles of Rest Architecture
+
+
+
+6 guiding principles of REST:
+    -client-server architecture:
+        client and server must be completely seperated from each other
+        They should be able to evolve independently
+    -Statelessness:
+        Every single request from the client to the server must contain all the information needed to understand
+        and fulfill the request
+        The server does not store any memory (context) about past requests on its own.
+        so even if the past one fails the second can do its job just fine
+    -Cacheability:
+        The server must explicitly tell the client whether a piece of data can be cached (saved locally) and for how long.
+        cacheing helps to load the data faster at lightning speed 
+    -Unifform Interface;
+        API -look and behave similar so any developer can read and understand them
+            -clean, unique url
+            -request/response has enough metadata to tell receiver how to process it
+            -HATEOS - modern web skips this - server return link in response telling the client what actions it can do next
+    -Layered System:
+        client cannot tell if it is connected directly to end server or intermediary
+    -Code on Demand:
+        server can occasionally send executable code ddown to client to run locally
+
+
+
+REST API language(metaphorical):
+    api uses:
+    -http - for communication System
+    -json - data format
+
+    REST isnnot a protoci=ol,library or anything - its an architectural style
+
+    urls : represent resources like : /users, /orders, /payment etc 
+    http methods : represent actions
+
+    GET/users : all users ( entire thing under that category)
+    GET/users/42 : user with id 42 ( distinction among that group)   
+    id - usually added dynamically when we post to thet broad category
+
+    with that entire url you say what you want to do and then in the request you pass the json body the data
+
+
+Request Components:
+    URL : /users : identifies endpoint/resources
+    query parameter
+    Headers : metadata ( authorization, content-type)
+    body: json data send to the server
+    
