@@ -1,0 +1,137 @@
+sql:
+    programming language used to interact with relational databases
+
+    dbms: a software layer between client and Database
+          sql interact with dbms
+
+
+    creating database:
+        CREATE DATABASE rissa_base;
+
+        USE rissa_base;
+
+    creating table:
+        CREATE TABLE table_name(
+            column_name1 datatype constraint,
+            column_name2 datatype contsraints
+        )
+
+    
+    Inserting values:
+        Standard Insert: Specify the columns, then the values.
+        eg:
+            INSERT INTO customers (name, mail) VALUES ('Aisha', 'aisha@email.com');
+
+        Bulk Insert:
+            -insert multiple rows in a single query by separating tuples with commas. 
+            -This is significantly faster than running 100 individual INSERT statements because it reduces network round-trips.
+            eg:
+                INSERT INTO customers (name, mail) VALUES ('Sara', 'sara@email.com'), ('John', 'john@email.com');
+
+        RETURNING Clause (PostgreSQL Power Feature)
+            When you insert a row, the database automatically generates the id (Primary Key). 
+            Instead of making a second query to find out what ID was assigned, append RETURNING id to get it instantly.
+            eg: 
+                INSERT INTO customers (name, mail) VALUES ('Alex', 'alex@email.com') RETURNING id;
+
+
+    
+    Updating values:
+        NEVER forget the WHERE clause.
+        eg:
+            UPDATE customers SET is_member = false WHERE customer_id = 42;
+
+        -If you are running a critical manual update in production, wrap it in a transaction block (BEGIN; ... COMMIT;). 
+        -Check the results before you type COMMIT. If you made a mistake, type ROLLBACK to undo it.
+
+    
+    Deleting Values:
+        DELETE removes rows permanently from a table.
+        Two ways:
+            DELETE FROM customers WHERE id = 5;
+
+            -delete an entire table:
+                TRUNCATETABLE customers;
+
+        Soft Deletes:
+            delete is dangerous as it wipes and loses data forever
+            instead developers use soft Delete
+            s
+
+
+    Filtering and Sorting:
+        WHERE (Filter):
+            prevents slow full-table sscans , scans only the filtered ones
+            comes immedietly after FROM
+
+        ORDER BY (sorting):
+            if this is not used , data is returned in arbitrary order
+            ASC :
+                sorts from lowest to highest
+            DESC:
+                sorts from highest to lowest
+            multiple columns in differnt orders:
+                ORDER BY price DESC, name ASC;
+
+    Pagination:
+        The results in any app is broken down into multiple pages like page 1 and page 2 etc.usinhg LIMIT AND OFFSET
+        LIMIT:
+            Controls the maximum number of rows the database is allowed to return
+        OFFSET:
+            Tells the database how many rows to skip before it starts returning data
+
+        eg:
+            page 1(first 10 items) : LIMIT 10 OFFSET 0
+            page2 (Next 10 items) : LIMIT 10 OFFSET 10
+            PAGE 3 (nEXT 30 Items)  : LIMIT 10 OFFSET 20
+
+
+        OFFSET gets executed first before LIMIT
+
+    
+    Operators :
+        IN ():
+        NOT IN ()
+
+        BETWEEN:
+            Filter the data between a boundary:
+                WHERE price BETWEEN 10.00 AND 20.00;
+                Used for ranges
+
+        LIKE :
+            Partial text Searching
+                'The%"
+                '%Potter'
+                '%ais%'
+
+            ILIKE(insensitive Like):
+                not sensitive to capitalisation
+
+        IS NULL()
+        IS NOT NULL():
+            To get the netires with non-null values
+
+            
+    Cardinality:
+        1: One to One:
+            each record in one table relates exactly one record in seond table
+            user : one user_profile
+            uses UNIQUE : it enforce 1: 1
+
+            keep frequently accessed info in lightweight tables
+            push bulky rarely accessed data in secondary table
+
+        2: One-to-many:
+            Single record in Table A can relate to multiple records in table b
+                one customer have many orders
+
+            Tip: Use Foreign Key at the many sideof the relationship
+
+        3: Many-to-many:
+            a record in Table A can link to multiple records in Table B and vice versatality
+                student: many course , a course: many student
+
+            
+            
+
+
