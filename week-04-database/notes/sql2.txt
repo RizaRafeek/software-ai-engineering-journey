@@ -1,0 +1,170 @@
+sql:
+    Aggregators:
+        COUNT:(counting number of rows)
+            Count(*):
+                to calculate the count of every single row in the table including NULL
+            COUNT(column_name):
+                calculate the count of NON NULL values in that column
+
+        SUM():
+            it completely ignores the NULL value
+            it is used to calculate the sum or numerical total value
+            Eg:
+                SELECT SUM(order_total) FROM orders;
+
+        AVG():
+            ignores NULL values
+            divides the total value with the number of columns that actually have the data
+
+
+        MIN():
+            least value
+        MAX():
+            largest value
+
+            MIN() and MAX() can be used for non-numericalcolumns as well unlike the SUM() and AVG()
+
+        
+        Eg:
+            SELECT SUM(price * stock_quantity) FROM products WHERE stock_quantity > 0 AND category = 'Electronics'
+
+
+
+    GROUPBY:
+        instead of writing where dept = eng, dept = med etc 
+        we can just write groupby dept, 
+        we will gwt thw operation individually done on each department
+
+        The database:
+            find the groups in groupby
+            perform the Aggregators
+            then return the final summary
+
+            after select you can write:
+                the one usi=ed in groupby
+                the aggregatore 
+                not random column names
+
+
+    HAVING:
+        Late Filtering
+            WHERE: 
+                when filtering raw, individual rows (columns that already exist in the database table)
+            HAVING:
+                when filtering aggregated, summary results (values calculated by SUM, COUNT, AVG, MIN, or MAX)
+
+
+    
+    How querying looks like:
+
+        Specify tables & how they join        -->     FROM + JOIN
+        2. Filter raw rows with conditions       -->     WHERE
+        3. Group them into category piles        -->     GROUP BY
+        4. Perform calculations on piles         -->     SUM / COUNT / AVG
+        5. Filter those calculated piles         -->     HAVING
+        6. Select final columns to show          -->     SELECT
+        7. Order and trim the final output       -->     ORDER BY + LIMIT
+
+
+
+    Normalization:
+        The process of organizing data in a database to eliminate redundancy to ensure data integrity
+        It avoids:
+            Insertion anomaly:
+                if single database, you can only add a row if it has value to fill in every columns
+                you cant just add a course without a student actively enrolled in it
+            Update Anomaly:
+                you have to update multiple rows with the data of that specific thing
+                tedious
+            Delete anomaly:
+
+
+        Levels of Normalization:
+            happens in progressive stages called Normal Forms:
+                1st Normal Form(1NF):
+                    -each cell contains single value(no comma seperated values)
+                    -row must be unique - have a primary key
+                    -entries in column must be same datatype
+
+                2nd Normal Form(2NF):
+                    If a table uses a combined primary key (like Order_ID + Item_ID), you cannot have columns that only 
+                    care about one of those IDs. If a column only describes the item, it needs to move out into its own Items table."
+                    -there should not be composite key and then partial dependency
+                    -if there the elements in composite key has to be seperated and only the promary key that actually 
+                     that the thingg depends on be considered
+                     -If the column doesnt need that key to exist - the key is out
+
+                3rd Normal Form(3NF):
+                    -If there is an column values in the table that doesnt directly depend on its primary key ,
+                     that column is out of that table -create a new table for that
+                    -If a column in your table depends on another regular column instead of the primary key, that column is out. Create a new table for it.
+                     (Example: A State column that changes based on a Zip_Code column, rather than the actual Customer_ID.)
+
+
+                Every column must loop back to the key (1NF), the whole key (2NF), and nothing but the key (3NF).
+
+
+        Database Index:
+            to avoid linear search and find the data faster
+            why not hashmap : hasmap values are completely random, so theycannot be sorted
+                            if you want to find the records like >50 , each numeric will have different hash values like 50 : 1w32, 51 : t43
+                            as you see, then such filtering is not possible
+
+            To create an index:
+                -we choose a specific column 
+                -that column is by we search for the info not any other column
+                -in instagram we search people by the profile name:
+                    so we index the data by the column name not their dob 
+                -which column to use for indexing depends upon the app we are designing
+                -You can also create composite(multi-column) indexes
+                    CREATE INDEX idx_users_name ON users(name);
+                When you quey for a specific data,
+                the index table with the pointer to original complete data is got and searched
+
+                when number of indexes increases, Insert and Update becomes slower
+                it has to sort through the whole list to find the perfect spot for the new item
+
+
+        Transactions:
+            A transaction allows you to bundle multiple SQL operations together and tell the database
+            Execute all of these queries as a single, indivisible unit. Either they all succeed perfectly, or none of them happen at all."
+                its like atom: something which cannot be divided
+
+            -If failed: the database performs a rollback
+
+            -when a transaction is happening,it happens in isolation, so if it delays other transactions also freeze
+             so:
+                keep transactions as short and punchy
+                never put external api calls inside database transactions(it might slow things down)
+            
+            -locking rows sometimes creates a deaadlock where both transactions want to lock the same row at the same time
+
+            A transaction is written :'
+                BEGIN
+                    run the changes to make
+                    if everything worked
+                COMMIT 
+                    something broke then
+                ROLLBACK
+
+
+        async/await:
+            in synchronous: when an opration is happening, even if the thing has no other work i wont take up new task till it finishes
+
+            in async whenever there is a free time, it takes up and executes the next task and attend multiple tasks 
+            simultaneously so there is no time waste
+
+            async: 
+                Placed on a function to allow the use of await inside it.
+            await:
+                 Placed before a slow operation to pause that specific function until the data arrives, without locking up the whole server.
+
+
+        ORM:
+            translator layer between code and the Database
+            with this you dont need to write raw sql queries , you write python functions,
+            Orm handles the transaction 
+
+            eg:
+                DjangoORM
+                SQLAlchemy

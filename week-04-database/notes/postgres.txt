@@ -1,0 +1,107 @@
+Postgres + FastAPI
+    configuration:
+        giving a piece of software the settings, rules, and information it needs before it can start working
+
+    You can use Django ORM outside django framework, but to configure it you need to write weird boilerplate
+    code.
+    But SQLAlchemy requires only a single line of code having our database connection string
+
+    Application:
+        FastAPI(waiter):
+            takes api request(foodn order) from customer and return API Response
+        Postgressql(store room):
+            all the raw ingredients(data) is stored
+        ORM(kitchen staff):
+            takes the waiter request clean and prep the data from store room and hand it oover to waiter
+
+
+        To create a connection we need:
+            database.py:
+                it doesnt know about the data
+                it just needs to establish a secure connection between python code and Postgressql
+
+            models.py:
+                it is is the blueprint of how database should store the data
+            
+            schemas.py:
+                it is used to validate(pydantic) the data coming from the user as well as data going out 
+                basically for validating api request and response
+
+            main.py:
+                it is where the whole process happens.it calls allthe other files to make the process
+
+            
+            Example:
+                [ User types Email & Password ]
+                            │
+                            ▼
+                1. SCHEMAS.PY (The Gatekeeper)
+                    Validates the input. Is the email real? Is the password long enough?
+                            │
+                            ▼
+                2. MAIN.PY (The Traffic Controller)
+                    Receives the verified data and asks database.py for a connection.
+                            │
+                            ▼
+                3. DATABASE.PY (The Pipeline)
+                    Opens a temporary "Session" (a secure tube) directly into PostgreSQL.
+                            │
+                            ▼
+                4. MODELS.PY (The Blueprint)
+                    Maps the Python data into the exact columns PostgreSQL expects.
+                            │
+                            ▼
+                [ Saved securely inside PostgreSQL! ]
+
+
+
+        Connection managemnet:
+            connection pooling:
+                5-10 open connections so when we want it we can use instantly
+            fastapi yield.db:
+                closes the connecction of api whether it succeed or fail as soon as its executes
+
+        
+        Model: 
+            python class representing a single table inside Postgressql
+            each variable in it = column in the table
+
+
+        session:
+            workspace
+            only after you type db.commit() the changes made here get saved to the Postgres
+
+        CRUD:   
+            Insertion:
+                @app.post("/orders")
+                def create_order(order: OrderCreate, db: Session = Depends(get_db)):
+                    new_order = models.Order(customer_id=order.customer_id, total_amount=order.total_amount)
+                    db.add(new_order)
+                    db.commit()
+                    db.refresh(new_order)
+                    return new_order
+
+            Reading:
+                @app.get("/products/{id}")
+                def get_product(id: int, db: Session = Depends(get_db)):
+                    product = db.query(models.Product).filter(models.Product.id == id).first()
+                    return product
+
+            Updating:
+                @app.patch("/customers/{id}")
+                def update_customer(id: int, customer_data: schemas.CustomerUpdate, db: Session = Depends(get_db)):
+                    customer = db.query(Model.customer).filter(Model.customer.id == id).first()
+                    if not item:
+                    raise HTTPEsception(status_code=404, detail="Not Found)
+                    if input_data.field_name is not None:
+                        item.field_name = input_data.field_name
+                    db.commit()
+                    db.refresh(item)
+                    return item
+
+
+            Deleting:
+                @app.delete("/customers/{id}")
+                def delete_customer(id: )
+                
+

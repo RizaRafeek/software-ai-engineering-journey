@@ -131,7 +131,39 @@ sql:
             a record in Table A can link to multiple records in Table B and vice versatality
                 student: many course , a course: many student
 
+
+    JOINS:
+        INNER JOIN:
+            It compoares two tables and the final table will only contain the records which have the values both in table q and table b if not such
+            records are dropped
+
+             Takeaway: 
+                Use INNER JOIN when you only care about complete, fully connected data. 
+                If an item missing a relationship is useless to your feature, INNER JOIN is your tool
+
             
-            
+        LEFT JOIN:
+            LEFT Tables all value will be kept and if it  has matching data from the second table,
+            pull that value in
+            else pad it with null
+
+            Takeaway:
+                : Use LEFT JOIN when you want a complete list of your primary entities,
+                 regardless of whether they have history or related items (e.g., "Show me all users and their total orders, including users who haven't ordered yet").
 
 
+        SO WE USE on in left join because we want to get all the entries in first table even if they dont match the condition, 
+        if not fill with NULL.If used WHERE it would have dropped the left table records with NULL values, turning it into INNER JOIN
+
+        But if you eplicitely want to find NULL values: use WHERE
+
+        Eg:
+            SELECT orders.order_id, products.prodduct_name, order_items.quantity
+            FROM orders 
+            INNER JOIN order_items ON orders.order_id = order_items.order_id 
+            INNER JOIN products ON order_items.product_id = products.product_id
+
+            SELECT customers.first_name, customers.last_name 
+            FROM customers 
+            LEFT JOIN orders ON customers.customer_id = orders.customer_id
+            WHERE orders.order_id IS NULL;

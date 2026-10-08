@@ -1,0 +1,128 @@
+information:
+    raw facts(data)becomes useful if they are organized and given context
+
+Tables :
+    rows and columns
+        columns : define what kind of data you are storing  eg- name,email,
+                  you can add only data relevent to thet type. you cant store name in id
+        row :
+            the actual data
+
+        -every table needs atleast one column and can hae zero rows(empty)
+
+        -each table has unique names
+        -database can have many tables
+
+        candidate keys:
+            the column names which can contest to become a key
+            a key has to be a uniqque identifier , it can be anything
+            eg: id, bracode key
+                we chose the id(more convenient) barcode becomes secondaary/alternate key
+
+    uniquee key:
+        can have null values unlike primary key but the value never repeats
+
+
+    foreign key:
+        can have duplicates
+
+
+    Transactions:
+        group of operations that either succeeds or fail altogether
+        for eg: 
+            when you buy 3 books : 3 book deleted from inventory , 3 book added to the slaes list etc
+            this process cannot fail in between . so all of them are grouped into a Transactions
+
+    isolation handles concurrent transactions smoothly
+    two person cannot order the last piece of book at the same time
+
+
+
+    ACID properties of database:
+        A - atomicity 
+        C - consistency
+        I - isolation
+        D - durability
+
+    
+    Normalization:
+        helps to avoid repeating data
+
+        first normal form:
+            -one column have one single value. multiple values? split into multiple columns
+        second normal form:
+            clumn shoukd depend on the primary key
+        third normal form:
+            non-key columns should depend directly on the primary key only not on other non-key elements
+
+
+    Record :
+         row—representing one full instance of an item stored in that table
+
+    
+    Schema:
+        It dictates what tables exist, what columns live inside them, what data types those columns accept, and how tables relate to one another. 
+        Think of it as the strict type-definition file for your database structure
+
+
+    Constraints:
+        rules enforced by the database engne to guranterr data integrity(bad/contradctory data never get saved)
+
+        Types:
+            NOT NULL:
+                column cannot be blank
+            UNIQUE:
+                No two rows in the column will have same values
+            CHECK:
+                ensure value meets a specific condition : eg: age>= 18
+            DEFAULT:
+                inserts a fallback value automatically if you dont provide one
+            
+
+    Datatypes:
+        Numeric:
+            INT, BIGINT, DECIMAL, float
+        Text/string:
+            VARCHAR, TEXT 
+        Boolean:
+            BOOLEAN 
+        Date and Time:
+            DATE, TIMESTAMP, TIMESTAMPTZ
+        Binary /JSON :
+            BLOB, JSONB 
+
+    NULL:
+        null is not zero
+        if you perform any mathematical operation with null, the result will be null eg: NULL + 5 = NULL
+
+
+    List v/s database
+        List:
+            -stored in RAM 
+            -Lifetimee tied to application lifecycle
+            -single threaded/ process limits
+        Database:
+            -stored in Disk
+            -Permanent memory (survives crashes)
+            -can handle multiple users at a time
+
+        Acid guarantee:
+            the process doesnt get lost midway in database as it might happen in lists
+            the database either completes the entire transaction or goes back to the state before the transaction started
+            so nothing is lost or added unexpectedly
+
+        Multiserver:
+            database is built for multi-user
+
+        Searching and Scalability:
+            -Lists : uses linear search : very slow and expensive
+            -database : Indexing (B-Tree) : hashmap is not odered so we use this
+
+        Why multiple tables instead of one:
+            -avoid redundant values
+            -ease of updation(eg: phone number)
+            -ease of deletion, insertion
+
+
+    Primary key:
+        A primary key must be unique, immutable (never change), and always present (never NULL)
